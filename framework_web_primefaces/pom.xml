@@ -1,0 +1,71 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+    <modelVersion>4.0.0</modelVersion>
+	
+	<parent>
+  		<groupId>br.com.marteleto</groupId>
+  		<artifactId>framework</artifactId>
+  		<version>1.0</version>
+  		<relativePath>../pom.xml</relativePath>
+  	</parent>
+	
+    <groupId>br.com.marteleto.framework</groupId>
+    <artifactId>framework_web_primefaces</artifactId>
+    <packaging>jar</packaging>
+
+    <name>framework web primefaces</name>
+    <description>framework web primefaces</description>
+   	<url>https://github.com/amarteleto/framework_web/framework_web_primefaces</url>
+
+    <dependencies>
+    	<!-- FRAMEWORK -->
+    	<dependency>
+			<groupId>${project.groupId}</groupId>
+			<artifactId>framework_web</artifactId>
+			<version>${project.version}</version>
+		</dependency>
+		<!-- JSF -->
+		<dependency>
+		    <groupId>com.sun.faces</groupId>
+		    <artifactId>jsf-api</artifactId>
+		    <version>2.2.17</version>
+		</dependency>
+		<dependency>
+		    <groupId>com.sun.faces</groupId>
+		    <artifactId>jsf-impl</artifactId>
+		    <version>2.2.17</version>
+		</dependency>
+		<!-- OMNIFACES -->
+		<dependency>
+		    <groupId>org.omnifaces</groupId>
+		    <artifactId>omnifaces</artifactId>
+		    <version>2.6.9</version>
+		</dependency>
+		<dependency>
+		    <groupId>javax.validation</groupId>
+		    <artifactId>validation-api</artifactId>
+		    <version>2.0.1.Final</version>
+		</dependency>
+  		<!-- PRIMEFACES -->
+  		<dependency>
+		    <groupId>org.primefaces</groupId>
+		    <artifactId>primefaces</artifactId>
+		    <version>6.2</version>
+		</dependency>
+		<dependency>
+		    <groupId>org.primefaces.extensions</groupId>
+		    <artifactId>primefaces-extensions</artifactId>
+		    <version>6.2.4</version>
+		</dependency>
+    </dependencies>
+
+    <build>
+        <finalName>${project.artifactId}</finalName>
+        <resources>
+			<resource>
+				<directory>src/main/resources</directory>
+				<filtering>true</filtering>
+			</resource>
+		</resources>
+    </build>
+</project>

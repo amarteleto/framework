@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+    <modelVersion>4.0.0</modelVersion>
+	
+	<parent>
+  		<groupId>br.com.marteleto</groupId>
+  		<artifactId>framework</artifactId>
+  		<version>1.0</version>
+  		<relativePath>../pom.xml</relativePath>
+  	</parent>
+	
+    <groupId>br.com.marteleto.framework</groupId>
+    <artifactId>framework_persistence</artifactId>
+    <packaging>jar</packaging>
+
+    <name>framework persistence</name>
+    <description>framework persistence</description>
+    <url>https://github.com/amarteleto/framework/framework_persistence</url>
+
+    <dependencies>
+    	<!-- FRAMEWORK -->
+    	<dependency>
+			<groupId>${project.groupId}</groupId>
+			<artifactId>framework_core</artifactId>
+			<version>${project.version}</version>
+		</dependency>
+    </dependencies>
+
+    <build>
+        <finalName>${project.artifactId}</finalName>
+        <resources>
+			<resource>
+				<directory>src/main/resources</directory>
+				<filtering>true</filtering>
+			</resource>
+		</resources>
+    </build>
+</project>

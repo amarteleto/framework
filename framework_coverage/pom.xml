@@ -1,0 +1,226 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+    <modelVersion>4.0.0</modelVersion>
+
+	<parent>
+  		<groupId>br.com.marteleto</groupId>
+  		<artifactId>framework</artifactId>
+  		<version>1.0</version>
+  		<relativePath>../pom.xml</relativePath>
+  	</parent>
+
+    <groupId>br.com.marteleto.framework</groupId>
+    <artifactId>framework_coverage</artifactId>
+    <packaging>jar</packaging>
+
+    <name>framework coverage</name>
+    <description>framework coverage</description>
+    <url>https://github.com/amarteleto/framework/framework_coverage</url>
+
+    <dependencies>
+    	<!-- FRAMEWORK -->
+    	<dependency>
+    		<groupId>${project.groupId}</groupId>
+    		<artifactId>framework_core</artifactId>
+    		<version>${project.version}</version>
+    		<scope>test</scope>
+		</dependency>
+		<dependency>
+    		<groupId>${project.groupId}</groupId>
+    		<artifactId>framework_persistence</artifactId>
+    		<version>${project.version}</version>
+    		<scope>test</scope>
+		</dependency>
+		<dependency>
+    		<groupId>${project.groupId}</groupId>
+    		<artifactId>framework_persistence_hibernate</artifactId>
+    		<version>${project.version}</version>
+    		<scope>test</scope>
+		</dependency>
+		<dependency>
+    		<groupId>${project.groupId}</groupId>
+    		<artifactId>framework_web</artifactId>
+    		<version>${project.version}</version>
+    		<scope>test</scope>
+		</dependency>
+		<dependency>
+    		<groupId>${project.groupId}</groupId>
+    		<artifactId>framework_web_primefaces</artifactId>
+    		<version>${project.version}</version>
+    		<scope>test</scope>
+		</dependency>
+		<dependency>
+    		<groupId>${project.groupId}</groupId>
+    		<artifactId>framework_service</artifactId>
+    		<version>${project.version}</version>
+    		<scope>test</scope>
+		</dependency>
+		<!-- JUNIT -->
+		<dependency>
+    		<groupId>junit</groupId>
+    		<artifactId>junit</artifactId>
+    		<version>4.12</version>
+    		<scope>test</scope>
+		</dependency>
+		<!-- APACHE DERBY -->
+		<dependency>
+		    <groupId>org.apache.derby</groupId>
+		    <artifactId>derby</artifactId>
+		    <version>10.14.1.0</version>
+		    <scope>test</scope>
+		</dependency>
+		<!-- CDI -->
+		<dependency>
+		    <groupId>org.jglue.cdi-unit</groupId>
+		    <artifactId>cdi-unit</artifactId>
+		    <version>4.0.2</version>
+		    <scope>test</scope>
+		</dependency>
+		<dependency>
+		    <groupId>org.jboss.weld.se</groupId>
+		    <artifactId>weld-se-core</artifactId>
+		    <version>3.0.3.Final</version>
+		    <scope>test</scope>
+		</dependency>
+		<!--  JERSEY -->
+		<dependency>
+		    <groupId>org.glassfish.jersey.core</groupId>
+		    <artifactId>jersey-common</artifactId>
+		    <version>2.26</version>
+		    <scope>test</scope>
+		</dependency>
+		<!-- Mockito -->
+	    <dependency>
+			<groupId>org.mockito</groupId>
+	      	<artifactId>mockito-core</artifactId>
+	      	<version>2.18.3</version>
+	      	<scope>test</scope>
+	    </dependency>
+    </dependencies>
+
+    <build>
+        <finalName>${project.artifactId}</finalName>
+        <plugins>
+        	<plugin>
+        		<groupId>org.jacoco</groupId>
+        		<artifactId>jacoco-maven-plugin</artifactId>
+				<version>0.8.1</version>
+        		<executions>
+                     <execution>
+                		<id>jacoco-pre-unit-test</id>
+                		<goals>
+                    		<goal>prepare-agent</goal>
+                		</goals>
+                		<configuration>
+                			<append>true</append>
+                    		<propertyName>surefireArgLine</propertyName>
+                		</configuration>
+            		</execution>
+            		<execution>
+                		<id>jacoco-post-unit-test</id>
+                		<phase>test</phase>
+                		<goals>
+                    		<goal>report</goal>
+                		</goals>
+            		</execution>
+            		<execution>
+                		<id>jacoco-pre-integration-test</id>
+                		<phase>pre-integration-test</phase>
+                		<goals>
+                    		<goal>prepare-agent</goal>
+                		</goals>
+                		<configuration>
+                			<append>true</append>
+                    		<propertyName>failsafeArgLine</propertyName>
+                		</configuration>
+            		</execution>
+            		<execution>
+                		<id>jacoco-post-integration-test</id>
+                		<phase>post-integration-test</phase>
+                		<goals>
+                    		<goal>report</goal>
+                		</goals>
+            		</execution>
+        		</executions>
+    		</plugin>
+    		<plugin>
+        		<groupId>org.apache.maven.plugins</groupId>
+        		<artifactId>maven-surefire-plugin</artifactId>
+        		<version>2.21.0</version>
+        		<configuration>
+            		<argLine>${surefireArgLine}</argLine>
+        		</configuration>
+    		</plugin>
+    		<plugin>
+        		<groupId>org.apache.maven.plugins</groupId>
+        		<artifactId>maven-failsafe-plugin</artifactId>
+        		<version>2.21.0</version>
+        		<executions>
+            		<execution>
+                		<id>integration-tests</id>
+                		<goals>
+                    		<goal>integration-test</goal>
+                    		<goal>verify</goal>
+                		</goals>
+                		<configuration>
+                    		<argLine>${failsafeArgLine}</argLine>
+                		</configuration>
+            		</execution>
+        		</executions>
+    		</plugin>
+			<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-antrun-plugin</artifactId>
+				<version>1.8</version>
+				<executions>
+					<execution>
+						<phase>post-integration-test</phase>
+						<goals>
+							<goal>run</goal>
+						</goals>
+						<configuration>
+							<target>
+								<echo message="Generating JaCoCo Reports" />
+								<taskdef name="report" classname="org.jacoco.ant.ReportTask">
+									<classpath path="${basedir}/target/jacoco-jars/org.jacoco.ant.jar" />
+								</taskdef>
+								<mkdir dir="${project.reporting.outputDirectory}/jacoco" />
+								<report>
+									<executiondata>
+										<fileset dir="${project.build.directory}">
+											<include name="jacoco.exec" />
+										</fileset>
+									</executiondata>
+									<structure name="jacoco-multi Coverage Project">
+										<group name="jacoco-multi">
+											<classfiles>
+												<fileset dir="${project.basedir}/../">
+													<include name="**/target/classes/**"/>
+												</fileset>
+											</classfiles>
+											<sourcefiles encoding="UTF-8">
+												<fileset dir="${project.basedir}/../">
+													<include name="**/src/main/java/**"/>
+												</fileset>
+											</sourcefiles>
+										</group>
+									</structure>
+									<html destdir="${project.reporting.outputDirectory}/jacoco" />
+									<xml destfile="${project.reporting.outputDirectory}/jacoco/jacoco.xml" />
+									<csv destfile="${project.reporting.outputDirectory}/jacoco/jacoco.csv" />
+								</report>
+							</target>
+						</configuration>
+					</execution>
+				</executions>
+				<dependencies>
+					<dependency>
+						<groupId>org.jacoco</groupId>
+						<artifactId>org.jacoco.ant</artifactId>
+						<version>0.8.1</version>
+					</dependency>
+				</dependencies>
+			</plugin>
+       	</plugins>
+    </build>
+</project>

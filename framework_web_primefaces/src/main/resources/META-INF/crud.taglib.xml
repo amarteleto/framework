@@ -1,0 +1,61 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<facelet-taglib version="2.2"
+    xmlns="http://xmlns.jcp.org/xml/ns/javaee"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xsi:schemaLocation="http://xmlns.jcp.org/xml/ns/javaee http://xmlns.jcp.org/xml/ns/javaee/web-facelettaglibrary_2_2.xsd"
+>
+    <namespace>http://www.marteleto.com.br/framework/web/primefaces/taglib/crud</namespace>
+	<composite-library-name>crud</composite-library-name>
+	
+    <tag>
+		<tag-name>basicTab</tag-name>
+		<component>
+			<resource-id>crud/basicTab.xhtml</resource-id>
+			<component-type>framework.BasicCrudTab</component-type>
+		</component>
+    	<attribute>
+    		<name>id</name>
+    		<required>false</required>
+    		<type>java.lang.String</type>
+    	</attribute>
+    	<attribute>
+    		<name>view</name>
+    		<required>true</required>
+    		<type>br.com.marteleto.framework.web.primefaces.component.crud.interfaces.IBasicCrudView</type>
+    	</attribute>
+  	</tag>
+  	<tag>
+		<tag-name>basicPanel</tag-name>
+		<component>
+			<resource-id>crud/basicPanel.xhtml</resource-id>
+			<component-type>framework.BasicCrudPanel</component-type>
+		</component>
+    	<attribute>
+    		<name>id</name>
+    		<required>false</required>
+    		<type>java.lang.String</type>
+    	</attribute>
+    	<attribute>
+    		<name>view</name>
+    		<required>true</required>
+    		<type>br.com.marteleto.framework.web.primefaces.component.crud.interfaces.IBasicCrudView</type>
+    	</attribute>
+  	</tag>
+  	<tag>
+		<tag-name>basicDialog</tag-name>
+		<component>
+			<resource-id>crud/basicDialog.xhtml</resource-id>
+			<component-type>framework.BasicCrudDialog</component-type>
+		</component>
+    	<attribute>
+    		<name>id</name>
+    		<required>false</required>
+    		<type>java.lang.String</type>
+    	</attribute>
+    	<attribute>
+    		<name>view</name>
+    		<required>true</required>
+    		<type>br.com.marteleto.framework.web.primefaces.component.crud.interfaces.IBasicCrudView</type>
+    	</attribute>
+  	</tag>
+</facelet-taglib>

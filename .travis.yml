@@ -1,0 +1,22 @@
+env:
+  global:
+    - CODECOV_TOKEN=$CODECOV_KEY
+
+notifications:
+  email:
+    on_failure: never
+    on_success: never
+        
+language: java
+
+addons:
+  sonarcloud:
+    organization: "amarteleto-github"
+    token:
+      secure: $SONAR_KEY
+
+script:
+  - mvn clean install sonar:sonar
+
+after_success:
+  - bash <(curl -s https://codecov.io/bash)

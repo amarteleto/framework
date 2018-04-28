@@ -1,0 +1,115 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ui:composition 
+	xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://xmlns.jcp.org/jsf/html"
+	xmlns:f="http://xmlns.jcp.org/jsf/core"
+	xmlns:cc="http://xmlns.jcp.org/jsf/composite"
+	xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+	xmlns:c="http://java.sun.com/jsp/jstl/core"
+	xmlns:fn="http://java.sun.com/jsp/jstl/functions"
+	xmlns:p="http://primefaces.org/ui"
+	xmlns:pe="http://primefaces.org/ui/extensions"
+	xmlns:of="http://omnifaces.org/functions"
+>
+	<cc:interface name="basic" componentType="framework.BasicCrudDialog">
+		<cc:attribute name="id" required="false" type="java.lang.String"/>
+		<cc:attribute name="view" required="true" type="br.com.marteleto.framework.web.primefaces.component.crud.interfaces.IBasicCrudView"/>
+	</cc:interface>
+	<cc:implementation>
+		<div id="#{cc.clientId}">
+   			<h:outputStylesheet library="style" name="crud.css"/>
+   			<h:outputScript library="script" name="crud.js" target="head"/>
+   			<f:event listener="#{cc.preRenderView}" type="preRenderView"/>
+   			<h:panelGroup layout="block">
+				<h:panelGroup id="mainPanel" layout="block">
+					<h:panelGroup layout="block" styleClass="filter">
+						<h:panelGroup layout="block" styleClass="filter-area">
+							<h:panelGroup layout="block" styleClass="filter-area-center filter-area-column">
+								<cc:renderFacet name="filter"/>
+							</h:panelGroup>
+							<h:panelGroup layout="block" styleClass="filter-area-left filter-area-column">
+								<p:commandLink id="btHome" action="#{cc.btHomeAction}" process="@this" update="@this" rendered="#{cc.attrs.btHomeRendered}">
+									<h:graphicImage library="image" name="home_24x24.png" styleClass="crud-icon"/>
+									<p:tooltip value="#{cc.attrs.tooltipHome}" for="btHome" />
+								</p:commandLink>
+								<h:commandLink immediate="true" id="exportExcel" rendered="#{cc.attrs.btExportExcelRendered}">
+							        <p:graphicImage library="image" name="excel_24x24.png" styleClass="crud-icon"/>
+							        <p:dataExporter type="xls" target="dataTable" fileName="data_export"/>
+							        <p:tooltip value="#{cc.attrs.tooltipExportExcel}" for="exportExcel"/>
+							    </h:commandLink>
+							</h:panelGroup>
+							<h:panelGroup layout="block" styleClass="filter-area-right filter-area-column">
+								<p:inputText id="txText" value="#{cc.attrs.filterText}" placeholder="#{cc.attrs.filterTextPlaceholder}" styleClass="text-mg-icon"/>
+								<p:commandLink id="btFilter" actionListener="#{cc.btFilterActionListener}" process="@this,:#{cc.attrs.idFacetFilter},txText" update="@this,mainPanel" rendered="#{cc.btFilterRendered}" disabled="#{cc.btFilterDisabled}">
+									<h:graphicImage library="image" name="filter_20x16.png" styleClass="crud-icon"/>
+									<p:tooltip for="btFilter" value="#{cc.attrs.tooltipFilter}"/>
+								</p:commandLink>
+								<p:defaultCommand target="btFilter" rendered="#{cc.btFilterDCRendered}"/>
+							</h:panelGroup>
+						</h:panelGroup>
+				    </h:panelGroup>
+					<p:dataTable id="dataTable" var="item" value="#{cc.lazy}" paginator="true" rows="#{cc.lazy.rowsPerPage}" lazy="true" paginatorPosition="bottom"
+		                 paginatorTemplate="{FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink}"
+		                 selectionMode="single" selection="#{cc.attrs.model}" emptyMessage="#{cc.attrs.dataTableEmptyMessage}"
+		                 styleClass="ui-panel-manterGrid">
+		                <p:ajax event="rowSelect" update=":#{cc.clientId}:panelButtons" process="@this"/>
+						<p:columns value="#{cc.columns}" var="column" columnIndexVar="index" style="#{column.style}" styleClass="#{column.styleClass}" sortBy="#{column.sort}">
+		            		<f:facet name="header">
+		                		<h:outputText value="#{column.header}" />
+		            		</f:facet>
+		            		<h:outputText value="#{column.abbreviate != null ? of:abbreviate(item[column.property], column.abbreviate) : item[column.property]}" title="#{item[column.property]}" rendered="#{!column.link}"/>
+			            	<p:commandLink value="#{column.abbreviate != null ? of:abbreviate(item[column.property], column.abbreviate) : item[column.property]}" title="#{item[column.property]}" rendered="#{column.link}" actionListener="#{cc.commandLinkActionListener(item)}" process="@this" update="@this,#{cc.clientId}">
+			            		<p:resetInput target=":#{cc.attrs.idFacetFilter},:#{cc.attrs.idFacetDetail}"/>
+			            	</p:commandLink>
+		        		</p:columns>
+		        		<p:column headerText="" style="width:auto;"/>
+		        		<f:facet name="footer">
+							<div class="ui-total-records">#{cc.attrs.lbTotalRecords} #{cc.lazy.rowCount}</div>
+						</f:facet>
+				    </p:dataTable>
+				    <h:panelGroup id="panelButtons" layout="block" styleClass="btns-crud">
+					    <p:commandButton value="#{cc.attrs.lbBtNew}" process="@this" update="@this,:#{cc.clientId}" actionListener="#{cc.btNewActionListener}" disabled="#{cc.btNewDisabled}" rendered="#{cc.btNewRendered}" icon="ui-icon-new">
+					    	<p:resetInput target=":#{cc.attrs.idFacetFilter},:#{cc.attrs.idFacetDetail}"/>
+					    </p:commandButton>
+					    <p:commandButton value="#{cc.attrs.lbBtConsult}" process="@this" update="@this,:#{cc.clientId}" actionListener="#{cc.btConsultActionListener}" disabled="#{cc.btConsultDisabled}" rendered="#{cc.btConsultRendered}" icon="ui-icon-detail">
+					    	<p:resetInput target=":#{cc.attrs.idFacetFilter},:#{cc.attrs.idFacetDetail}"/>
+					    </p:commandButton>
+					    <p:commandButton value="#{cc.attrs.lbBtAlter}" process="@this" update="@this,:#{cc.clientId}" actionListener="#{cc.btAlterActionListener}" disabled="#{cc.btAlterDisabled}" rendered="#{cc.btAlterRendered}" icon="ui-icon-edit">
+					    	<p:resetInput target=":#{cc.attrs.idFacetFilter},:#{cc.attrs.idFacetDetail}"/>
+					    </p:commandButton>
+					    <p:commandButton value="#{cc.attrs.lbBtDelete}" process="@this" update="@this,mainPanel" actionListener="#{cc.btDeleteActionListener}" disabled="#{cc.btDeleteDisabled}" rendered="#{cc.btDeleteRendered}" icon="ui-icon-del">
+					    	<p:confirm header="#{cc.attrs.title}" message="#{cc.attrs.lbExclusionQuestion}" icon="ui-icon-alert-msgmodal" />
+					    </p:commandButton>
+					    <p:commandButton value="#{cc.attrs.lbBtActivate}" process="@this" update="@this,mainPanel" actionListener="#{cc.btActivateActionListener}" disabled="#{cc.btActivateDisabled}" rendered="#{cc.btActivateRendered}" icon="ui-icon-activate"/>
+					    <p:commandButton value="#{cc.attrs.lbBtInactivate}" process="@this" update="@this,mainPanel" actionListener="#{cc.btInactivateActionListener}" disabled="#{cc.btInactivateDisabled}" rendered="#{cc.btInactivateRendered}" icon="ui-icon-inactivate"/>
+					    <cc:renderFacet name="buttons"/>
+				    </h:panelGroup>
+				</h:panelGroup>
+    		</h:panelGroup>
+    		<p:dialog id="dialog" header="#{cc.attrs.title}" closable="false" closeOnEscape="false" modal="true" widgetVar="#{cc.attrs.dialogWidgetVar}" appendTo="@form">
+				<h:panelGroup layout="block">
+	           		<h:panelGroup layout="block">
+	           			<cc:renderFacet name="detail"/>
+	           		</h:panelGroup>
+	           		<h:panelGroup id="dialogPanelButtons" layout="block" styleClass="btns-crud">
+		           		<p:commandButton id="btSave" value="#{cc.attrs.lbBtSave}" actionListener="#{cc.btSaveActionListener}" process="@this,:#{cc.attrs.idFacetDetail}" update="@this,:#{cc.attrs.idFacetDetail}" disabled="#{cc.btSaveDisabled}" rendered="#{cc.btSaveRendered}" icon="ui-icon-save"/>
+		           		<p:commandButton value="#{cc.attrs.lbBtAlter}" process="@this" update="@this,dialogPanelButtons,:#{cc.attrs.idFacetDetail}" actionListener="#{cc.btAlterDetailActionListener}" disabled="#{cc.btAlterDetailDisabled}" rendered="#{cc.btAlterDetailRendered}" icon="ui-icon-edit">
+					    	<p:resetInput target=":#{cc.attrs.idFacetFilter},:#{cc.attrs.idFacetDetail}"/>
+					    </p:commandButton>
+					    <p:commandButton value="#{cc.attrs.lbBtDelete}" process="@this" update="@this,:#{cc.clientId}" actionListener="#{cc.btDeleteDetailActionListener}" disabled="#{cc.btDeleteDetailDisabled}" rendered="#{cc.btDeleteDetailRendered}" icon="ui-icon-del">
+					    	<p:confirm header="#{cc.attrs.title}" message="#{cc.attrs.lbExclusionQuestion}" icon="ui-icon-alert-msgmodal" />
+					    </p:commandButton>
+		           		<p:commandButton value="#{cc.attrs.lbBtCancel}" actionListener="#{cc.btCancelActionListener}" process="@this" update="@this" rendered="#{cc.btCancelRendered}" disabled="#{cc.btCancelDisabled}" icon="ui-icon-back">
+		           			<p:resetInput target=":#{cc.attrs.idFacetFilter},:#{cc.attrs.idFacetDetail}"/>
+		           		</p:commandButton>
+		           		<p:commandButton value="#{cc.attrs.lbBtCancel}" actionListener="#{cc.btCancelActionListener}" process="@this" update="@this" rendered="#{cc.btCancelConfirmRendered}" disabled="#{cc.btCancelDisabled}" icon="ui-icon-back">
+		           			<p:resetInput target=":#{cc.attrs.idFacetFilter},:#{cc.attrs.idFacetDetail}"/>
+		           			<p:confirm header="#{cc.attrs.title}" message="#{cc.attrs.lbCancelQuestion}" icon="ui-icon-alert-msgmodal" />
+		           		</p:commandButton>
+		           		<p:defaultCommand target="btSave" rendered="#{cc.btSaveDCRendered}"/>
+	           		</h:panelGroup>
+	           	</h:panelGroup>
+			</p:dialog>
+   		</div>
+	</cc:implementation>
+</ui:composition>
