@@ -11,7 +11,7 @@ language: java
 
 addons:
   sonarcloud:
-    organization: "amarteleto-github"
+    organization: "amarteleto"
     token:
       secure: $SONAR_KEY
 
