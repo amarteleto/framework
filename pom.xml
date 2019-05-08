@@ -45,9 +45,6 @@
         <maven.compiler.target>1.8</maven.compiler.target>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
         <sonar.jacoco.reportPaths>./../framework_coverage/target/jacoco.exec</sonar.jacoco.reportPaths>
-        <sonar.junit.reportPaths>./../target/surefire-reports</sonar.junit.reportPaths>
-        <sonar.surefire.reportsPath>./../target/surefire-reports</sonar.surefire.reportsPath>
-        <sonar.failsafe.reportsPath>./../target/failsafe-reports</sonar.failsafe.reportsPath>
     </properties>
     
     <build>

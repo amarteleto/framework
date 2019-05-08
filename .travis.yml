@@ -10,7 +10,7 @@ notifications:
 language: java
 
 script:
-  - mvn clean install sonar:sonar -Dsonar.host.url=https://sonarcloud.io -Dsonar.login=$SONAR_KEY -Dsonar.organization=amarteleto
+  - mvn clean install antrun:run sonar:sonar -Dsonar.host.url=https://sonarcloud.io -Dsonar.login=$SONAR_KEY -Dsonar.organization=amarteleto
 
 after_success:
   - bash <(curl -s https://codecov.io/bash)
