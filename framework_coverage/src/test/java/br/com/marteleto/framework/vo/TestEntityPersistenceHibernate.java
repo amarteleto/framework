@@ -2,9 +2,11 @@ package br.com.marteleto.framework.vo;
 
 import java.util.List;
 
-import javax.persistence.AttributeOverride;
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
 import javax.persistence.Index;
 import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
@@ -24,17 +26,30 @@ import br.com.marteleto.framework.persistence.vo.abstracts.APersistenceEntity;
 				@Index(name="IX_TEEP_CANDIDATE_KEY",columnList="NM_TEEP_NAME")
 		}
 )
-@SequenceGenerator(name="SEQUENCE", sequenceName="SQ_TEEP_SEQUENCE", allocationSize = 1)
-@AttributeOverride(name="id", column=@Column(name="SQ_TEEP_SEQUENCE",nullable=false,length=5))
+
 public class TestEntityPersistenceHibernate extends APersistenceEntity {
 	private static final long serialVersionUID = 1L;
+	
+ 	@Id
+    @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "SQ_TEEP_SEQUENCE")
+ 	@SequenceGenerator(name="SQ_TEEP_SEQUENCE", sequenceName="SQ_TEEP_SEQUENCE", allocationSize = 1)
+ 	@Column(name = "SQ_TEEP_SEQUENCE")
+    private Long id;
 	
 	@Column(name="NM_TEEP_NAME",nullable=false,length=100)
 	private String name;
 	
 	@Transient
 	private List<TestEntityPersistenceHibernateChild> childrens;
+	
+	public Long getId() {
+		return id;
+	}
 
+	public void setId(Long id) {
+		this.id = id;
+	}
+	
 	public String getName() {
 		return name;
 	}
