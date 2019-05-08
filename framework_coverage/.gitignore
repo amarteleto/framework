@@ -1,3 +1,10 @@
+/derby.log
+/Servers/
+/.sonarlint/
+/.metadata/
+/.recommenders/
 /target/
 /target/**
-/derby.log
+/RemoteSystemsTempFiles/
+/RemoteSystemsTempFiles/**
+/**/Thumbs.db
